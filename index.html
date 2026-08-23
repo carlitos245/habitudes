@@ -91,7 +91,7 @@ body {
 /* Tableau des habitudes */
 .habit-table {
   width: 100%;
-  min-width: 600px;
+  min-width: 480px; /* ← AVANT : 600px (trop large pour smartphone) */
   border-collapse: collapse;
 }
 
@@ -105,18 +105,18 @@ body {
 /* Colonnes des jours */
 .habit-table th:nth-child(n+2):nth-child(-n+8),
 .habit-table td:nth-child(n+2):nth-child(-n+8) {
-  width: 35px;
+  width: 30px; /* ← AVANT : 35px */
   padding: 4px;
 }
 
 .habit-table td input[type="checkbox"] {
-  transform: scale(1.2);
+  transform: scale(1.1); /* ← AVANT : 1.2 */
 }
 
 /* Colonne supprimer */
 .habit-table th:last-child,
 .habit-table td:last-child {
-  width: 45px;
+  width: 40px; /* ← AVANT : 45px */
   padding: 4px;
 }
 
@@ -136,7 +136,7 @@ body {
 }
 
 /* RESPONSIVE — passe en colonne AVANT débordement */
-@media (max-width: 950px) {
+@media (max-width: 1050px) { /* ← AVANT : 950px */
   .habit-layout {
     flex-direction: column;
   }
@@ -148,6 +148,21 @@ body {
 
   #weekFromageBox {
     margin: 0 auto;
+  }
+}
+
+/* RESPONSIVE smartphone vertical */
+@media (max-width: 480px) {
+  .habit-table {
+    min-width: 360px; /* ← S’adapte aux petits écrans */
+  }
+
+  .habit-add {
+    flex-direction: column;
+  }
+
+  .habit-add button {
+    width: 100%;
   }
 }
 
