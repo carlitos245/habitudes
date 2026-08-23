@@ -12,19 +12,17 @@ body {
   background: #A3B18A;
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* Fix Safari iPhone */
 }
 
 /* Conteneur principal */
-.habit-container {
-  max-width: 1000px;
-  margin: 40px auto;
-  padding: 25px;
-  background: #f3f4f6;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  overflow-x: hidden; /* Fix Safari iPhone */
-}
+  .habit-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 25px;
+    background: #f3f4f6;   /*#ffffff;*/
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
 
 /* Layout tableau + fromage */
 .habit-layout {
@@ -36,12 +34,11 @@ body {
 /* Colonne gauche : tableau */
 .habit-left {
   flex: 1;
-  overflow-x: auto; /* IMPORTANT pour mobile */
 }
 
 /* Colonne droite : fromage */
 .habit-right {
-  width: 280px;
+  width: 260px;
 }
 
 /* Titre */
@@ -83,7 +80,6 @@ body {
 /* Tableau des habitudes */
 .habit-table {
   width: 100%;
-  min-width: 600px; /* IMPORTANT pour éviter le débordement */
   border-collapse: collapse;
 }
 
@@ -93,7 +89,7 @@ body {
   text-align: center;
 }
 
-/* Colonnes des jours */
+/* Colonnes des jours : plus petites */
 .habit-table th:nth-child(n+2):nth-child(-n+8),
 .habit-table td:nth-child(n+2):nth-child(-n+8) {
   width: 35px;
@@ -104,7 +100,7 @@ body {
   transform: scale(1.2);
 }
 
-/* Colonne supprimer */
+/* Colonne supprimer : compacte */
 .habit-table th:last-child,
 .habit-table td:last-child {
   width: 45px;
@@ -124,22 +120,6 @@ body {
 
 .delete-habit:hover {
   background: #be123c;
-}
-
-/* RESPONSIVE MOBILE */
-@media (max-width: 700px) {
-  .habit-layout {
-    flex-direction: column;
-  }
-
-  .habit-right {
-    width: 100%;
-    margin-top: 20px;
-  }
-
-  #weekFromageBox {
-    margin: 0 auto;
-  }
 }
 </style>
 </head>
