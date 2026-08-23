@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Habit Tracker Mesure 5</title>
+
+<style>
+/* Style général */
+body {
+  font-family: Arial, sans-serif;
+  background: #A3B18A;
+  margin: 0;
+  padding: 0;
+}
+
+/* Conteneur principal */
+  .habit-container {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 25px;
+    background: #f3f4f6;   /*#ffffff;*/
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  }
+
+/* Layout tableau + fromage */
+.habit-layout {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* Colonne gauche : tableau */
+.habit-left {
+  flex: 1;
+}
+
+/* Colonne droite : fromage */
+.habit-right {
+  width: 260px;
+}
+
+/* Titre */
+.habit-title {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 800;
+  margin-bottom: 20px;
+  color: #111827;
+}
+
+/* Zone d’ajout */
+.habit-add {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.habit-add input {
+  flex: 1;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+}
+
+.habit-add button {
+  padding: 10px 15px;
+  background: #111827;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.habit-add button:hover {
+  background: #374151;
+}
+
+/* Tableau des habitudes */
+.habit-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.habit-table th,
+.habit-table td {
+  border: 1px solid #e5e7eb;
+  text-align: center;
+}
+
+/* Colonnes des jours : plus petites */
+.habit-table th:nth-child(n+2):nth-child(-n+8),
+.habit-table td:nth-child(n+2):nth-child(-n+8) {
+  width: 35px;
+  padding: 4px;
+}
+
+.habit-table td input[type="checkbox"] {
+  transform: scale(1.2);
+}
+
+/* Colonne supprimer : compacte */
+.habit-table th:last-child,
+.habit-table td:last-child {
+  width: 45px;
+  padding: 4px;
+}
+
+/* Bouton supprimer */
+.delete-habit {
+  background: #e11d48;
+  color: white;
+  border: none;
+  padding: 3px 6px;
+  font-size: 12px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.delete-habit:hover {
+  background: #be123c;
+}
+
+
+</style>
+</head>
+
+<body>
+
+<div class="habit-container">
+<div class="habit-layout">
+
+  <!-- COLONNE GAUCHE : TABLEAU -->
+  <div class="habit-left">
+
+    <h2 class="habit-title">Suivi d’habitudes 5 max</h2>
+
+    <div class="habit-add">
+      <input type="text" id="habitInput" placeholder="Ajouter une habitude…">
+      <button onclick="addHabit()">Ajouter</button>
+    </div>
+
+    <table class="habit-table">
+      <thead>
+        <tr>
+          <th>Habitude</th>
+          <th>Lun</th>
+          <th>Mar</th>
+          <th>Mer</th>
+          <th>Jeu</th>
+          <th>Ven</th>
+          <th>Sam</th>
+          <th>Dim</th>
+          <th>Supprimer</th>
+        </tr>
+      </thead>
+      <tbody id="habitBody"></tbody>
+    </table>
+
+  </div>
+
+  <!-- COLONNE DROITE : FROMAGE -->
+  <div class="habit-right">
+    <div id="weekFromageBox">
+      <!-- ton fromage ici -->
+        <!-- FROMAGE DES JOURS DE LA SEMAINE (version compacte) -->
+<div id="weekFromageBox" style="
+  margin: 25px auto;
+  padding: 15px;
+  background: #f3f4f6;
+  border-radius: 12px;
+  border: 1px solid #d1d5db;
+  width: 220px;
+  text-align: center;
+">
+  <strong style="font-size:14px;">Disponibilité par jour</strong>
+
+  <canvas id="weekFromageCanvas" width="180" height="180" style="margin-top: 10px;"></canvas>
+
+  <!-- Légende compacte -->
+  <div style="margin-top: 10px; font-size: 11px; line-height: 16px;">
+    <div><span style="display:inline-block;width:10px;height:10px;background:#10b981;border-radius:3px;margin-right:4px;"></span>Léger</div>
+    <div><span style="display:inline-block;width:10px;height:10px;background:#f59e0b;border-radius:3px;margin-right:4px;"></span>Moyen</div>
+    <div><span style="display:inline-block;width:10px;height:10px;background:#e11d48;border-radius:3px;margin-right:4px;"></span>Saturé</div>
+  </div>
+</div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+<script>
+  /* Clé de stockage local */
+  const HABIT_KEY = "habitTracker5";
+
+  /* Charger les habitudes au démarrage */
+  document.addEventListener("DOMContentLoaded", loadHabits);
+
+  function loadHabits() {
+    const data = JSON.parse(localStorage.getItem(HABIT_KEY)) || [];
+    data.forEach(habit => displayHabit(habit));
+  }
+
+  /* Ajouter une habitude */
+  function addHabit() {
+    const input = document.getElementById("habitInput");
+    const text = input.value.trim();
+    if (text === "") return;
+
+    const habit = {
+      name: text,
+      days: [false, false, false, false, false, false, false]
+    };
+
+    saveHabit(habit);
+    displayHabit(habit);
+
+    input.value = "";
+  }
+
+  /* Afficher une habitude */
+  function displayHabit(habit) {
+  const body = document.getElementById("habitBody");
+  const tr = document.createElement("tr");
+
+  // Nom sécurisé
+  const tdName = document.createElement("td");
+  tdName.textContent = habit.name;
+  tr.appendChild(tdName);
+
+  // Cases à cocher sécurisées
+  habit.days.forEach((checked, index) => {
+    const td = document.createElement("td");
+    const checkbox = document.createElement("input");
+    checkbox.type = "checkbox";
+    checkbox.checked = checked;
+    checkbox.onclick = () => toggleDay(habit.name, index, checkbox);
+    td.appendChild(checkbox);
+    tr.appendChild(td);
+  });
+
+  // Bouton supprimer sécurisé
+  const tdDelete = document.createElement("td");
+  const btn = document.createElement("button");
+  btn.classList.add("delete-habit");
+  btn.textContent = "X";
+  btn.onclick = () => deleteHabit(habit.name, btn);
+  tdDelete.appendChild(btn);
+  tr.appendChild(tdDelete);
+
+  body.appendChild(tr);
+}
+
+
+  /* Sauvegarder */
+  function saveHabit(habit) {
+    const data = JSON.parse(localStorage.getItem(HABIT_KEY)) || [];
+    data.push(habit);
+    localStorage.setItem(HABIT_KEY, JSON.stringify(data));
+  }
+
+  /* Cocher / décocher */
+  function toggleDay(name, index, checkbox) {
+    const data = JSON.parse(localStorage.getItem(HABIT_KEY)) || [];
+    const habit = data.find(h => h.name === name);
+    habit.days[index] = checkbox.checked;
+    localStorage.setItem(HABIT_KEY, JSON.stringify(data));
+  }
+
+  /* Supprimer */
+  function deleteHabit(name, btn) {
+    let data = JSON.parse(localStorage.getItem(HABIT_KEY)) || [];
+    data = data.filter(h => h.name !== name);
+    localStorage.setItem(HABIT_KEY, JSON.stringify(data));
+    btn.parentElement.parentElement.remove();
+  }
+
+  function escapeHTML(str) {
+    return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+
+  /* ---------------------------------------------------------
+     FROMAGE DES JOURS – Version compacte + corrigée
+  --------------------------------------------------------- */
+
+  function updateWeekFromage() {
+    const canvas = document.getElementById("weekFromageCanvas");
+    if (!canvas) return;
+
+    const ctx = canvas.getContext("2d");
+
+    const data = JSON.parse(localStorage.getItem(HABIT_KEY)) || [];
+
+    const weekLoad = {
+      lundi: 0,
+      mardi: 0,
+      mercredi: 0,
+      jeudi: 0,
+      vendredi: 0,
+      samedi: 0,
+      dimanche: 0
+    };
+
+    data.forEach(habit => {
+      habit.days.forEach((checked, index) => {
+        if (checked) {
+          if (index === 0) weekLoad.lundi++;
+          if (index === 1) weekLoad.mardi++;
+          if (index === 2) weekLoad.mercredi++;
+          if (index === 3) weekLoad.jeudi++;
+          if (index === 4) weekLoad.vendredi++;
+          if (index === 5) weekLoad.samedi++;
+          if (index === 6) weekLoad.dimanche++;
+        }
+      });
+    });
+
+    const days = Object.keys(weekLoad);
+    const values = Object.values(weekLoad);
+
+    const total = values.reduce((a, b) => a + b, 0);
+
+    const cx = canvas.width / 2;
+    const cy = canvas.height / 2;
+    const radius = 90;
+
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    let startAngle = 0;
+
+    days.forEach((day, index) => {
+      const value = values[index];
+
+      const minSlice = 0.25; // ≈ 14°
+      let sliceAngle = (value / (total || 1)) * (2 * Math.PI);
+
+      if (sliceAngle < minSlice) {
+        sliceAngle = minSlice;
+      }
+
+      let color = "#10b981"; // vert
+      if (value >= 5) color = "#e11d48"; // rouge a partir de 5 coches
+      else if (value >= 2) color = "#f59e0b"; // orange a partir de 2 coches
+
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.arc(cx, cy, radius, startAngle, startAngle + sliceAngle); // ← AGRANDI
+      ctx.closePath();
+      ctx.fillStyle = color;
+      ctx.fill();
+
+      const midAngle = startAngle + sliceAngle / 2;
+      const tx = cx + Math.cos(midAngle) * 65; // ← TEXTE PLUS LOIN
+      const ty = cy + Math.sin(midAngle) * 65;
+
+      ctx.fillStyle = "#111827";
+      ctx.font = "bold 14px Arial";
+      ctx.textAlign = "center";
+      ctx.fillText(day, tx, ty);
+
+      startAngle += sliceAngle;
+    });
+
+    ctx.beginPath();
+    ctx.arc(cx, cy, 35, 0, 2 * Math.PI); // ← TROU LÉGÈREMENT PLUS GRAND
+    ctx.fillStyle = "#ffffff";
+    ctx.fill();
+
+    ctx.fillStyle = "#111827";
+    ctx.font = "bold 12px Arial";
+    ctx.textAlign = "center";
+    ctx.fillText("Semaine", cx, cy + 4);
+  }
+  
+  /* La mise à jour automatique du fromage */
+  document.addEventListener("DOMContentLoaded", updateWeekFromage);
+  setInterval(updateWeekFromage, 800);
+
+</script>
+
+
+</body>
+</html>
