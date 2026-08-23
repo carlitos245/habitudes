@@ -14,9 +14,13 @@ body {
   padding: 0;
 }
 
+body, .habit-container {
+  overflow-x: hidden;
+}
+    
 /* Conteneur principal */
   .habit-container {
-    max-width: 100%;
+    max-width: 1000px;
     margin: 40px auto;
     padding: 25px;
     background: #f3f4f6;   /*#ffffff;*/
@@ -147,7 +151,7 @@ body {
     <!-- COLONNE GAUCHE : TABLEAU -->
     <div class="habit-left">
 
-      <h2 class="habit-title">Suivi d’habitudes  max</h2>
+      <h2 class="habit-title">Suivi d’habitudes</h2>
 
       <div class="habit-add">
         <input type="text" id="habitInput" placeholder="Ajouter une habitude…">
