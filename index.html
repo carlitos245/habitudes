@@ -22,12 +22,12 @@ body {
 
 /* Conteneur principal */
 .habit-container {
-  max-width: 1000px;
-  margin: 40px auto;
-  padding: 25px;
+  max-width: 950px; /* ← Réduit de 50px */
+  margin: 20px auto; /* ← Réduit */
+  padding: 20px; /* ← Réduit */
   background: #f3f4f6;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border-radius: 10px; /* ← Réduit */
+  box-shadow: 0 3px 10px rgba(0,0,0,0.08);
   overflow-x: hidden;
   overflow-wrap: break-word;
 }
@@ -35,7 +35,7 @@ body {
 /* Layout tableau + fromage */
 .habit-layout {
   display: flex;
-  gap: 20px;
+  gap: 15px; /* ← Réduit */
   align-items: flex-start;
 }
 
@@ -47,15 +47,15 @@ body {
 
 /* Colonne droite : fromage */
 .habit-right {
-  width: 280px;
+  width: 240px; /* ← Réduit de 40px */
 }
 
 /* Titre */
 .habit-title {
   text-align: center;
-  font-size: 30px;
+  font-size: 26px; /* ← Réduit de 4px */
   font-weight: 800;
-  margin-bottom: 20px;
+  margin-bottom: 15px; /* ← Réduit */
   color: #111827;
   overflow-wrap: break-word;
 }
@@ -63,20 +63,20 @@ body {
 /* Zone d’ajout */
 .habit-add {
   display: flex;
-  gap: 10px;
-  margin-bottom: 25px;
+  gap: 8px; /* ← Réduit */
+  margin-bottom: 20px; /* ← Réduit */
 }
 
 .habit-add input {
   flex: 1;
-  padding: 10px;
+  padding: 8px; /* ← Réduit */
   border: 2px solid #ccc;
   border-radius: 6px;
   overflow-wrap: break-word;
 }
 
 .habit-add button {
-  padding: 10px 15px;
+  padding: 8px 12px; /* ← Réduit */
   background: #111827;
   color: white;
   border: none;
@@ -91,7 +91,7 @@ body {
 /* Tableau des habitudes */
 .habit-table {
   width: 100%;
-  min-width: 480px; /* ← AVANT : 600px (trop large pour smartphone) */
+  min-width: 420px; /* ← Réduit de 60px */
   border-collapse: collapse;
 }
 
@@ -99,25 +99,26 @@ body {
 .habit-table td {
   border: 1px solid #e5e7eb;
   text-align: center;
+  padding: 3px; /* ← Réduit */
   overflow-wrap: break-word;
 }
 
 /* Colonnes des jours */
 .habit-table th:nth-child(n+2):nth-child(-n+8),
 .habit-table td:nth-child(n+2):nth-child(-n+8) {
-  width: 30px; /* ← AVANT : 35px */
-  padding: 4px;
+  width: 28px; /* ← Réduit */
+  padding: 3px;
 }
 
 .habit-table td input[type="checkbox"] {
-  transform: scale(1.1); /* ← AVANT : 1.2 */
+  transform: scale(1.0); /* ← Réduit */
 }
 
 /* Colonne supprimer */
 .habit-table th:last-child,
 .habit-table td:last-child {
-  width: 40px; /* ← AVANT : 45px */
-  padding: 4px;
+  width: 35px; /* ← Réduit */
+  padding: 3px;
 }
 
 /* Bouton supprimer */
@@ -125,9 +126,9 @@ body {
   background: #e11d48;
   color: white;
   border: none;
-  padding: 3px 6px;
-  font-size: 12px;
-  border-radius: 6px;
+  padding: 2px 5px; /* ← Réduit */
+  font-size: 11px; /* ← Réduit */
+  border-radius: 5px; /* ← Réduit */
   cursor: pointer;
 }
 
@@ -136,14 +137,14 @@ body {
 }
 
 /* RESPONSIVE — passe en colonne AVANT débordement */
-@media (max-width: 1050px) { /* ← AVANT : 950px */
+@media (max-width: 1050px) {
   .habit-layout {
     flex-direction: column;
   }
 
   .habit-right {
     width: 100%;
-    margin-top: 20px;
+    margin-top: 15px; /* ← Réduit */
   }
 
   #weekFromageBox {
@@ -154,7 +155,7 @@ body {
 /* RESPONSIVE smartphone vertical */
 @media (max-width: 480px) {
   .habit-table {
-    min-width: 360px; /* ← S’adapte aux petits écrans */
+    min-width: 340px; /* ← Réduit encore */
   }
 
   .habit-add {
