@@ -12,7 +12,7 @@ body {
   background: #A3B18A;
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* Fix Safari iPhone + PC narrow window */
+  overflow-x: hidden; /* Empêche tout débordement horizontal */
 }
 
 /* Conteneur principal */
@@ -23,7 +23,8 @@ body {
   background: #f3f4f6;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  overflow-x: hidden; /* Empêche tout débordement */
+  overflow-x: hidden; /* Empêche le conteneur de glisser */
+  overflow-wrap: break-word; /* Empêche le texte de sortir */
 }
 
 /* Layout tableau + fromage */
@@ -36,7 +37,7 @@ body {
 /* Colonne gauche : tableau */
 .habit-left {
   flex: 1;
-  overflow-x: auto; /* IMPORTANT pour mobile */
+  overflow-x: auto; /* Scroll horizontal propre */
 }
 
 /* Colonne droite : fromage */
@@ -51,6 +52,7 @@ body {
   font-weight: 800;
   margin-bottom: 20px;
   color: #111827;
+  overflow-wrap: break-word; /* Empêche les titres longs de déborder */
 }
 
 /* Zone d’ajout */
@@ -83,7 +85,7 @@ body {
 /* Tableau des habitudes */
 .habit-table {
   width: 100%;
-  min-width: 600px; /* IMPORTANT pour éviter le débordement */
+  min-width: 600px; /* Largeur minimale du tableau */
   border-collapse: collapse;
 }
 
@@ -91,6 +93,7 @@ body {
 .habit-table td {
   border: 1px solid #e5e7eb;
   text-align: center;
+  overflow-wrap: break-word; /* Empêche les textes longs de déborder */
 }
 
 /* Colonnes des jours */
@@ -129,7 +132,7 @@ body {
 /* RESPONSIVE — passe en colonne AVANT débordement */
 @media (max-width: 950px) {
   .habit-layout {
-    flex-direction: column;
+    flex-direction: column; /* Les colonnes passent l'une sous l'autre */
   }
 
   .habit-right {
@@ -141,6 +144,7 @@ body {
     margin: 0 auto;
   }
 }
+
 </style>
 </head>
 
