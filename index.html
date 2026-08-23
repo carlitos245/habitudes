@@ -168,6 +168,24 @@ body {
     width: 100%;
   }
 }
+/* MODE PAYSAGE — le tableau prend toute la largeur */
+@media (orientation: landscape) {
+  .habit-layout {
+    flex-direction: row; /* Les deux colonnes côte à côte */
+  }
+
+  .habit-left {
+    width: 100%; /* Le tableau prend toute la largeur disponible */
+  }
+
+  .habit-table {
+    min-width: 100%; /* Le tableau s’étire complètement */
+  }
+
+  .habit-right {
+    width: 260px; /* Le fromage reste à droite */
+  }
+}
 
 </style>
 </head>
