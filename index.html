@@ -6,13 +6,18 @@
 <title>Habit Tracker Mesure </title>
 
 <style>
+/* Empêche le zoom automatique sur iPhone */
+input, textarea {
+  font-size: 16px !important;
+}
+
 /* Style général */
 body {
   font-family: Arial, sans-serif;
   background: #A3B18A;
   margin: 0;
   padding: 0;
-  overflow-x: hidden; /* Empêche tout débordement horizontal */
+  overflow-x: hidden;
 }
 
 /* Conteneur principal */
@@ -23,8 +28,8 @@ body {
   background: #f3f4f6;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  overflow-x: hidden; /* Empêche le conteneur de glisser */
-  overflow-wrap: break-word; /* Empêche le texte de sortir */
+  overflow-x: hidden;
+  overflow-wrap: break-word;
 }
 
 /* Layout tableau + fromage */
@@ -37,7 +42,7 @@ body {
 /* Colonne gauche : tableau */
 .habit-left {
   flex: 1;
-  overflow-x: auto; /* Scroll horizontal propre */
+  overflow-x: auto;
 }
 
 /* Colonne droite : fromage */
@@ -52,7 +57,7 @@ body {
   font-weight: 800;
   margin-bottom: 20px;
   color: #111827;
-  overflow-wrap: break-word; /* Empêche les titres longs de déborder */
+  overflow-wrap: break-word;
 }
 
 /* Zone d’ajout */
@@ -67,7 +72,7 @@ body {
   padding: 10px;
   border: 2px solid #ccc;
   border-radius: 6px;
-  overflow-wrap: break-word; /* Empêche le texte de déborder */
+  overflow-wrap: break-word;
 }
 
 .habit-add button {
@@ -86,7 +91,7 @@ body {
 /* Tableau des habitudes */
 .habit-table {
   width: 100%;
-  min-width: 600px; /* Largeur minimale du tableau */
+  min-width: 600px;
   border-collapse: collapse;
 }
 
@@ -94,7 +99,7 @@ body {
 .habit-table td {
   border: 1px solid #e5e7eb;
   text-align: center;
-  overflow-wrap: break-word; /* Empêche les textes longs de déborder */
+  overflow-wrap: break-word;
 }
 
 /* Colonnes des jours */
@@ -133,7 +138,7 @@ body {
 /* RESPONSIVE — passe en colonne AVANT débordement */
 @media (max-width: 950px) {
   .habit-layout {
-    flex-direction: column; /* Les colonnes passent l'une sous l'autre */
+    flex-direction: column;
   }
 
   .habit-right {
