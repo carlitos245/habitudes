@@ -15,14 +15,14 @@ body {
 }
 
 /* Conteneur principal */
-  .habit-container {
-    max-width: 1000px;
-    margin: 40px auto;
-    padding: 25px;
-    background: #f3f4f6;   /*#ffffff;*/
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  }
+.habit-container {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 25px;
+  background: #f3f4f6;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
 
 /* Layout tableau + fromage */
 .habit-layout {
@@ -34,7 +34,7 @@ body {
 /* Colonne gauche : tableau */
 .habit-left {
   flex: 1;
-  overflow-x: auto;
+  overflow-x: auto; /* IMPORTANT pour mobile */
 }
 
 /* Colonne droite : fromage */
@@ -81,7 +81,7 @@ body {
 /* Tableau des habitudes */
 .habit-table {
   width: 100%;
-  min-width: 600px;
+  min-width: 600px; /* IMPORTANT pour éviter le débordement */
   border-collapse: collapse;
 }
 
@@ -91,7 +91,7 @@ body {
   text-align: center;
 }
 
-/* Colonnes des jours : plus petites */
+/* Colonnes des jours */
 .habit-table th:nth-child(n+2):nth-child(-n+8),
 .habit-table td:nth-child(n+2):nth-child(-n+8) {
   width: 35px;
@@ -102,7 +102,7 @@ body {
   transform: scale(1.2);
 }
 
-/* Colonne supprimer : compacte */
+/* Colonne supprimer */
 .habit-table th:last-child,
 .habit-table td:last-child {
   width: 45px;
@@ -124,6 +124,7 @@ body {
   background: #be123c;
 }
 
+/* RESPONSIVE MOBILE */
 @media (max-width: 700px) {
   .habit-layout {
     flex-direction: column;
@@ -138,72 +139,71 @@ body {
     margin: 0 auto;
   }
 }
-
 </style>
 </head>
 
 <body>
 
 <div class="habit-container">
-<div class="habit-layout">
+  <div class="habit-layout">
 
-  <!-- COLONNE GAUCHE : TABLEAU -->
-  <div class="habit-left">
+    <!-- COLONNE GAUCHE : TABLEAU -->
+    <div class="habit-left">
 
-    <h2 class="habit-title">Suivi d’habitudes 5 max</h2>
+      <h2 class="habit-title">Suivi d’habitudes 5 max</h2>
 
-    <div class="habit-add">
-      <input type="text" id="habitInput" placeholder="Ajouter une habitude…">
-      <button onclick="addHabit()">Ajouter</button>
+      <div class="habit-add">
+        <input type="text" id="habitInput" placeholder="Ajouter une habitude…">
+        <button onclick="addHabit()">Ajouter</button>
+      </div>
+
+      <table class="habit-table">
+        <thead>
+          <tr>
+            <th>Habitude</th>
+            <th>Lun</th>
+            <th>Mar</th>
+            <th>Mer</th>
+            <th>Jeu</th>
+            <th>Ven</th>
+            <th>Sam</th>
+            <th>Dim</th>
+            <th>Supprimer</th>
+          </tr>
+        </thead>
+        <tbody id="habitBody"></tbody>
+      </table>
+
     </div>
 
-    <table class="habit-table">
-      <thead>
-        <tr>
-          <th>Habitude</th>
-          <th>Lun</th>
-          <th>Mar</th>
-          <th>Mer</th>
-          <th>Jeu</th>
-          <th>Ven</th>
-          <th>Sam</th>
-          <th>Dim</th>
-          <th>Supprimer</th>
-        </tr>
-      </thead>
-      <tbody id="habitBody"></tbody>
-    </table>
+    <!-- COLONNE DROITE : FROMAGE -->
+    <div class="habit-right">
+
+      <div id="weekFromageBox" style="
+        margin: 25px auto;
+        padding: 15px;
+        background: #f3f4f6;
+        border-radius: 12px;
+        border: 1px solid #d1d5db;
+        width: 220px;
+        text-align: center;
+      ">
+
+        <strong style="font-size:14px;">Disponibilité par jour</strong>
+
+        <canvas id="weekFromageCanvas" width="180" height="180" style="margin-top: 10px;"></canvas>
+
+        <div style="margin-top: 10px; font-size: 11px; line-height: 16px;">
+          <div><span style="display:inline-block;width:10px;height:10px;background:#10b981;border-radius:3px;margin-right:4px;"></span>Léger</div>
+          <div><span style="display:inline-block;width:10px;height:10px;background:#f59e0b;border-radius:3px;margin-right:4px;"></span>Moyen</div>
+          <div><span style="display:inline-block;width:10px;height:10px;background:#e11d48;border-radius:3px;margin-right:4px;"></span>Saturé</div>
+        </div>
+
+      </div>
+
+    </div>
 
   </div>
-
-  <!-- COLONNE DROITE : FROMAGE -->
-  <div class="habit-right">
-    
-      <!-- ton fromage ici -->
-        <!-- FROMAGE DES JOURS DE LA SEMAINE (version compacte) -->
-<div id="weekFromageBox" style="
-  margin: 25px auto;
-  padding: 15px;
-  background: #f3f4f6;
-  border-radius: 12px;
-  border: 1px solid #d1d5db;
-  width: 220px;
-  text-align: center;
-">
-
-  <strong style="font-size:14px;">Disponibilité par jour</strong>
-
-  <canvas id="weekFromageCanvas" width="180" height="180" style="margin-top: 10px;"></canvas>
-
-  <!-- Légende compacte -->
-  <div style="margin-top: 10px; font-size: 11px; line-height: 16px;">
-    <div><span style="display:inline-block;width:10px;height:10px;background:#10b981;border-radius:3px;margin-right:4px;"></span>Léger</div>
-    <div><span style="display:inline-block;width:10px;height:10px;background:#f59e0b;border-radius:3px;margin-right:4px;"></span>Moyen</div>
-    <div><span style="display:inline-block;width:10px;height:10px;background:#e11d48;border-radius:3px;margin-right:4px;"></span>Saturé</div>
-  </div>
-  </div>
-
-</div>
 </div>
 
 <script>
